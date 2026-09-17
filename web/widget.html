@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huzur Widget</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #060913;
+      background-image: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="p-3 text-slate-100 flex flex-col justify-between h-screen max-w-sm mx-auto select-none overflow-hidden">
+  
+  <!-- Üst Mini Başlık -->
+  <header class="flex items-center justify-between pb-2 border-b border-white/10">
+    <div class="flex items-center gap-2">
+      <span class="text-lg">✨</span>
+      <span class="font-bold text-sm bg-gradient-to-r from-white to-sky-300 bg-clip-text text-transparent">
+        Huzur Widget
+      </span>
+    </div>
+
+    <!-- Hızlı Ambiyans & Tam Ekran Linki -->
+    <div class="flex items-center gap-1.5">
+      <button id="w-audio-btn" class="px-2.5 py-1 rounded-full bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/30 text-[11px] font-medium text-sky-300 flex items-center gap-1 transition-all">
+        <span id="w-audio-icon">▶️</span>
+        <span id="w-audio-text">Kamp & Piyano</span>
+      </button>
+      <a href="index.html" class="p-1 rounded-full text-slate-400 hover:text-white" title="Tam Uygulamayı Aç">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Olumlama Kartı -->
+  <main class="my-auto py-2">
+    <div id="w-card" class="rounded-2xl p-5 relative overflow-hidden border border-white/10 shadow-2xl transition-all duration-300 bg-gradient-to-br from-cyan-950 via-teal-900 to-blue-950 min-h-[220px] flex flex-col justify-between">
+      <div class="flex items-center justify-between text-[11px] text-white/60">
+        <span id="w-category-badge" class="px-2.5 py-0.5 rounded-full bg-white/10 border border-white/10">
+          🌊 İç Huzur
+        </span>
+        <span id="w-index-badge">1 / 10</span>
+      </div>
+
+      <div class="my-auto py-3 text-center">
+        <p id="w-affirmation-text" class="text-base sm:text-lg font-serif font-light text-white leading-relaxed">
+          “Zihnim sakin, kalbim dingin. Şu anda güvendeyim ve her şey olması gerektiği gibi akıyor.”
+        </p>
+        <div id="w-subtext" class="text-[11px] text-white/60 italic mt-3">
+          Derin bir nefes al ve kontrol edemediğin her şeyi serbest bırak.
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-[10px] text-white/40 pt-2 border-t border-white/5">
+        <span>Günün Niyeti</span>
+        <span id="w-streak-info">🌱 1. Gün Serisi</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Alt Hızlı Kontroller (Minimalist ve Şık) -->
+  <footer class="pt-2 border-t border-white/10 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <button id="w-btn-prev" class="px-3 py-1.5 rounded-xl glass-button flex items-center justify-center text-xs text-slate-200">
+        ‹ Önceki
+      </button>
+      <button id="w-btn-fav" class="w-9 h-9 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 flex items-center justify-center text-sm text-rose-300">
+        ❤️
+      </button>
+      <button id="w-btn-next" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs text-white font-medium">
+        Sonraki ›
+      </button>
+    </div>
+
+    <!-- Hızlı Widget Rozeti -->
+    <div class="text-[10px] text-slate-400 font-medium">
+      ✨ Huzur
+    </div>
+  </footer>
+
+  <script src="affirmations-data.js"></script>
+  <script src="audio-engine.js"></script>
+  <script>
+    let idx = 0;
+    const all = typeof AFFIRMATIONS_DATA !== 'undefined' ? AFFIRMATIONS_DATA : [];
+    const textEl = document.getElementById('w-affirmation-text');
+    const subEl = document.getElementById('w-subtext');
+    const catEl = document.getElementById('w-category-badge');
+    const cardEl = document.getElementById('w-card');
+    const indexEl = document.getElementById('w-index-badge');
+    const streakInfo = document.getElementById('w-streak-info');
+
+    const streak = localStorage.getItem('huzur_streak') || '1';
+    if (streakInfo) streakInfo.textContent = `🌱 ${streak}. Gün Serisi`;
+
+    function renderWidget(i) {
+      if (!all.length) return;
+      idx = (i + all.length) % all.length;
+      const item = all[idx];
+      textEl.textContent = `“${item.text}”`;
+      subEl.textContent = item.subtext;
+      catEl.textContent = `${item.icon} ${item.categoryName}`;
+      indexEl.textContent = `${idx + 1} / ${all.length}`;
+      cardEl.className = `rounded-2xl p-5 relative overflow-hidden border border-white/10 shadow-2xl transition-all duration-300 bg-gradient-to-br ${item.gradient} min-h-[220px] flex flex-col justify-between`;
+    }
+
+    document.getElementById('w-btn-next').onclick = () => renderWidget(idx + 1);
+    document.getElementById('w-btn-prev').onclick = () => renderWidget(idx - 1);
+
+    document.getElementById('w-btn-fav').onclick = (e) => {
+      let favs = JSON.parse(localStorage.getItem('huzur_favorites') || '[]');
+      const id = all[idx].id;
+      if (!favs.includes(id)) {
+        favs.push(id);
+        localStorage.setItem('huzur_favorites', JSON.stringify(favs));
+        e.currentTarget.classList.add('bg-rose-500/20', 'border-rose-400');
+      }
+    };
+
+    // Ses Aç / Kapat (Kamp ateşi & piyano)
+    const audioBtn = document.getElementById('w-audio-btn');
+    audioBtn.onclick = async () => {
+      if (typeof window.audioEngine !== 'undefined') {
+        await window.audioEngine.toggleAll();
+        const isP = window.audioEngine.isPlaying;
+        document.getElementById('w-audio-icon').textContent = isP ? '⏸️' : '▶️';
+        document.getElementById('w-audio-text').textContent = isP ? 'Çalıyor' : 'Kamp & Piyano';
+      }
+    };
+
+    renderWidget(0);
+  </script>
+</body>
+</html>

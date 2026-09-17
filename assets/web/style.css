@@ -1,0 +1,169 @@
+/* Huzur - Özel Stiller ve Animasyonlar */
+
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(30px, -40px) scale(1.15); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-40px, 35px) scale(1.1); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; filter: blur(30px); }
+  50% { opacity: 0.75; filter: blur(45px); }
+}
+
+@keyframes breatheCircle {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(56, 189, 248, 0.2); }
+  40% { transform: scale(1.45); box-shadow: 0 0 50px rgba(56, 189, 248, 0.6); }
+  60% { transform: scale(1.45); box-shadow: 0 0 45px rgba(129, 140, 248, 0.5); }
+  90% { transform: scale(1); box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
+}
+
+.animate-orb-1 {
+  animation: floatOrb1 18s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: floatOrb2 22s ease-in-out infinite;
+}
+
+.breathe-animation {
+  animation: breatheCircle 16s ease-in-out infinite;
+}
+
+/* Glassmorphism efektleri */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+/* Kart Destesi ve 3D Perspektif */
+.card-perspective {
+  perspective: 1200px;
+}
+
+.affirmation-card {
+  user-select: none;
+  touch-action: none;
+  will-change: transform, opacity;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease;
+}
+
+.affirmation-card.is-dragging {
+  transition: none !important;
+  cursor: grabbing !important;
+}
+
+.affirmation-card.swiped-right {
+  transform: translate3d(120vw, 30px, 0) rotate(35deg) !important;
+  opacity: 0 !important;
+}
+
+.affirmation-card.swiped-left {
+  transform: translate3d(-120vw, 30px, 0) rotate(-35deg) !important;
+  opacity: 0 !important;
+}
+
+/* Kart Arkası Derinlik Deste Efekti */
+.card-secondary {
+  transform: scale(0.94) translateY(24px);
+  opacity: 0.55;
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.card-tertiary {
+  transform: scale(0.88) translateY(44px);
+  opacity: 0.3;
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Kaydırma Rozetleri (Swipe badges) */
+.swipe-badge-like {
+  opacity: 0;
+  transform: rotate(-15deg) scale(0.8);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.swipe-badge-pass {
+  opacity: 0;
+  transform: rotate(15deg) scale(0.8);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* WIDGET MODU */
+body.widget-mode {
+  background: transparent !important;
+}
+
+body.widget-mode #main-container {
+  max-width: 360px !important;
+  height: 520px !important;
+  margin: auto;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body.widget-mode .hide-in-widget {
+  display: none !important;
+}
+
+body.widget-mode .widget-only {
+  display: flex !important;
+}
+
+/* Özel Kaydırma Çubuğu */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Ses Dalgaları Görselleştirici */
+.sound-wave-bar {
+  transition: height 0.08s ease;
+}
