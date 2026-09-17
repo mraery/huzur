@@ -6,18 +6,18 @@ Zihninize dinginlik, kalbinize huzur ve gününüze ilham katan kart tabanlı g�
 
 ## 📱 Android APK İndirme
 
-Uygulamanın Android APK dosyası GitHub Actions tarafından otomatik derlenmekte ve **Releases** sayfasında sunulmaktadır:
+Uygulamanın **102 adet olumlama** içeren güncel Android APK dosyası GitHub Actions tarafından otomatik derlenmekte ve **Releases** sayfasında sunulmaktadır:
 
-👉 **[Huzur Android APK İndir (Releases)](https://github.com/mraery/huzur/releases)**
+👉 **[Huzur v1.1.0 Android APK İndir (Releases)](https://github.com/mraery/huzur/releases)**
 
 ---
 
 ## 🌿 Öne Çıkan Özellikler
 
-1. **3D Kart Destesi & Sağa/Sola Kaydırma (Swipe Physics)**:
-   - Parmağınızla veya farenizle kartı sağa savurduğunuzda olumlama kalbinize (**Favoriler**) kaydedilir.
-   - Sola savurduğunuzda sıradaki olumlamaya geçilir.
-   - Her olumlama için özenle hazırlanmış aurora renk gradyanları ve tefekkür notları.
+1. **📚 100+ Günlük Olumlama Kütüphanesi**:
+   - 6 farklı yaşam alanında (İç Huzur, Öz Sevgi, Bolluk/Başarı, Şükran, Sağlık/Canlılık, Cesaret/Özgürleşme) 102 adet derin olumlama.
+   - Her olumlama için özel aurora gradyanları ve tefekkür notları.
+
 
 2. **Gerçek Zamanlı Web Audio API Ortam Sesleri**:
    - 🏕️ **Gece Kampı**: Çıtırdayan kamp ateşi ve sıcak gece esintisi.
