@@ -594,6 +594,56 @@ class AmbientAudioEngine {
     this.isPlaying = Object.values(this.activeChannels).some(v => v === true);
   }
 
+  // Meditasyon & Nefes Çanı (Zen Gong)
+  async strikeBell() {
+    await this.initContext();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const freqs = [384.0, 432.0, 576.0, 864.0, 1152.0];
+    const amplitudes = [0.35, 0.45, 0.25, 0.12, 0.05];
+
+    freqs.forEach((f, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, now);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(amplitudes[idx], now + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 6.5);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+
+      osc.start(now);
+      osc.stop(now + 6.8);
+    });
+  }
+
+  // Uyku Zamanlayıcısı (Sleep Timer with gradual fade-out)
+  setSleepTimer(minutes, onFinish) {
+    if (this._sleepTimerTimeout) clearTimeout(this._sleepTimerTimeout);
+    if (!minutes || minutes <= 0) return;
+
+    const ms = minutes * 60 * 1000;
+    this._sleepTimerTimeout = setTimeout(() => {
+      // 5 saniyede sesi kısarak kapat (fade-out)
+      if (this.masterGain && this.ctx) {
+        const now = this.ctx.currentTime;
+        this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now);
+        this.masterGain.gain.linearRampToValueAtTime(0.0001, now + 4.5);
+      }
+      setTimeout(() => {
+        ['campfire', 'crickets', 'water', 'piano', 'ocean', 'bowl'].forEach(ch => this.setChannelState(ch, false));
+        if (this.masterGain && this.ctx) {
+          this.masterGain.gain.setValueAtTime(0.7, this.ctx.currentTime);
+        }
+        if (onFinish) onFinish();
+      }, 5000);
+    }, ms);
+  }
+
   getVisualizerData() {
     if (!this.analyser) return new Uint8Array(0);
     const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
@@ -603,3 +653,4 @@ class AmbientAudioEngine {
 }
 
 window.audioEngine = new AmbientAudioEngine();
+

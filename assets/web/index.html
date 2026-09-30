@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Huzur - Günlük Olumlama & Meditasyon</title>
-  <meta name="description" content="Zihninize dinginlik, kalbinize huzur katan günlük olumlama ve ortam sesleri meditasyon uygulaması.">
+  <title>Huzur - Bütünsel Meditasyon & Farkındalık Platformu</title>
+  <meta name="description" content="Rehberli meditasyonlar, interaktif nefes koçu, zengin ortam sesleri ve günlük olumlamalarla zihnini dinginleştir.">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#070a12">
+  <meta name="theme-color" content="#060913">
 
   <!-- Google gstatic Tailwind CSS CDN -->
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
@@ -16,9 +16,9 @@
     body {
       background-color: #060913;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.3) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.25) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(13, 148, 136, 0.25) 0px, transparent 60%);
+        radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.35) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(88, 28, 135, 0.3) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(13, 148, 136, 0.3) 0px, transparent 60%);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
   </style>
@@ -28,17 +28,16 @@
   <!-- Arka Plan Yüzen Işık Küreleri & Zen Ateşböcekleri Parçacık Canvası -->
   <canvas id="zen-particles" class="fixed inset-0 pointer-events-none z-0"></canvas>
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-24 -left-24 w-[30rem] h-[30rem] bg-cyan-500/10 rounded-full blur-3xl animate-orb-1"></div>
-    <div class="absolute top-1/3 -right-24 w-[30rem] h-[30rem] bg-indigo-500/10 rounded-full blur-3xl animate-orb-2"></div>
-    <div class="absolute -bottom-24 left-1/3 w-[30rem] h-[30rem] bg-amber-500/10 rounded-full blur-3xl animate-orb-1"></div>
+    <div class="absolute -top-24 -left-24 w-[32rem] h-[32rem] bg-cyan-500/10 rounded-full blur-3xl animate-orb-1"></div>
+    <div class="absolute top-1/3 -right-24 w-[32rem] h-[32rem] bg-indigo-500/10 rounded-full blur-3xl animate-orb-2"></div>
+    <div class="absolute -bottom-24 left-1/3 w-[32rem] h-[32rem] bg-amber-500/10 rounded-full blur-3xl animate-orb-1"></div>
   </div>
 
   <!-- Ana Kapsayıcı -->
-  <div id="main-container" class="relative z-10 flex flex-col justify-between h-full min-h-screen max-w-4xl mx-auto w-full px-4 py-3 md:py-6">
+  <div id="main-container" class="relative z-10 flex flex-col justify-between h-full min-h-screen max-w-2xl mx-auto w-full px-4 pt-3 pb-24 md:pb-28">
     
-    <!-- ÜST ÇUBUK: Logo, Seri ve Hızlı Menü -->
+    <!-- ÜST ÇUBUK: Logo, Seri ve Hızlı Ambiyans Butonu -->
     <header class="flex items-center justify-between gap-3 pb-3 border-b border-white/5">
-      <!-- Logo ve Başlık -->
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 ring-1 ring-white/20">
           <span class="text-xl">✨</span>
@@ -49,390 +48,438 @@
               Huzur
             </h1>
             <!-- Seri Rozeti -->
-            <div id="streak-badge" class="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-[11px] font-semibold text-amber-300 flex items-center gap-1 cursor-default" title="Her gün bir olumlama oku, huzur serini koru">
-              <span>🌱</span>
+            <div id="streak-badge" class="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-400/30 text-[11px] font-semibold text-amber-300 flex items-center gap-1 cursor-default" title="Her gün meditasyon yap, huzur serini koru">
+              <span>🔥</span>
               <span id="streak-text">1. Gün</span>
             </div>
           </div>
-          <p class="text-[11px] text-slate-400 font-medium hidden sm:block">Günlük Olumlama & Meditasyon</p>
+          <p class="text-[11px] text-slate-400 font-medium">Bütünsel Meditasyon & Farkındalık</p>
         </div>
       </div>
 
-      <!-- SAĞ ÜST: Müzik & Ambiyans Seçeneği ve Diğer Araçlar -->
+      <!-- Hızlı Ambiyans & Ses Göstergesi -->
       <div class="flex items-center gap-2">
-        <!-- Müzik & Ambiyans Seçici Butonu (Öne Çıkarılmış) -->
-        <button id="btn-mixer-toggle" class="px-3.5 py-1.5 rounded-full bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/40 text-sky-300 flex items-center gap-2 text-xs font-semibold shadow-lg shadow-sky-500/15 transition-all cursor-pointer" title="Huzur Verici Sesler (Kamp ateşi, cırcır böceği, piyano, su)">
-          <div id="sound-visualizer" class="flex items-center gap-0.5 h-3.5">
+        <button id="btn-quick-sound" class="px-3 py-1.5 rounded-full glass-button text-xs text-sky-300 flex items-center gap-2 font-medium hover:border-sky-400/40" title="Ambiyans Sesi Aç/Kapat">
+          <div id="sound-visualizer" class="flex items-center gap-0.5 h-3">
             <span class="sound-wave-bar w-0.5 bg-sky-300 rounded-full h-1"></span>
-            <span class="sound-wave-bar w-0.5 bg-sky-300 rounded-full h-2"></span>
-            <span class="sound-wave-bar w-0.5 bg-sky-300 rounded-full h-3"></span>
+            <span class="sound-wave-bar w-0.5 bg-sky-300 rounded-full h-2.5"></span>
             <span class="sound-wave-bar w-0.5 bg-sky-300 rounded-full h-1.5"></span>
           </div>
-          <span>Ambiyans Müzikleri</span>
-        </button>
-
-        <!-- Ana Ekran Widget Rehberi Butonu -->
-        <button id="btn-widget-guide-toggle" class="p-2 sm:px-3 sm:py-1.5 rounded-full glass-button text-xs text-amber-300 hover:text-amber-200 flex items-center gap-1.5" title="Telefona / Masaüstüne Widget Olarak Ekle">
-          <span>📱</span>
-          <span class="hidden md:inline font-medium">Widget Ekle</span>
-        </button>
-
-        <!-- Dinginlik Zamanlayıcısı -->
-        <button id="btn-timer-toggle" class="p-2 sm:px-3 sm:py-1.5 rounded-full glass-button text-xs text-slate-300 hover:text-white flex items-center gap-1.5" title="Meditasyon Zamanlayıcısı">
-          <span>⏱️</span>
-          <span class="hidden md:inline font-medium">Zamanlayıcı</span>
-        </button>
-
-        <!-- Özel Olumlama Ekle -->
-        <button id="btn-add-custom" class="p-2 rounded-full glass-button text-slate-300 hover:text-white hide-in-widget" title="Kendi Olumlamanı Ekle">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <span id="quick-sound-label">Ambiyans</span>
         </button>
       </div>
     </header>
 
-    <!-- KATEGORİ FİLTRE ŞERİDİ (Yatay Kaydırılabilir Minimalist) -->
-    <nav class="py-2.5 overflow-x-auto no-scrollbar hide-in-widget">
-      <div id="category-filters" class="flex items-center gap-2 min-w-max pb-1">
-        <!-- JavaScript ile dinamik eklenecektir -->
-      </div>
-    </nav>
+    <!-- ==================== SEKMELER İÇERİĞİ ==================== -->
+    <div class="flex-1 mt-3">
 
-    <!-- ORTA SAHNE: 3D KART DESTESİ (Kaydırılabilir Olumlama Kartları) -->
-    <main class="flex-1 flex flex-col items-center justify-center my-3 md:my-5 relative card-perspective w-full max-w-md md:max-w-lg mx-auto">
-      <div id="card-stack" class="relative w-full h-[450px] md:h-[490px]">
-        <!-- Aktif ve derinlik kartları app.js tarafından yerleştirilir -->
-        <div class="flex items-center justify-center h-full text-slate-400 text-sm animate-pulse">
-          Olumlamalar hazırlanıyor...
-        </div>
-      </div>
-    </main>
-
-    <!-- ALT KONTROL DOCK'U (Yenilenmiş, Ultra Şık ve Estetik Zen Dock) -->
-    <footer class="pt-2 pb-3 flex flex-col items-center gap-3">
-      <!-- Modern Yüzen Kontrol Paneli (Floating Glass Dock) -->
-      <div class="glass-panel px-4 py-2.5 rounded-full flex items-center justify-center gap-2 sm:gap-4 shadow-2xl border border-white/10 backdrop-blur-2xl">
+      <!-- ==================== TAB 1: REHBERLİ MEDİTASYON ==================== -->
+      <section id="tab-meditation" class="tab-pane active space-y-4">
         
-        <!-- Önceki Kart -->
-        <button id="btn-prev" class="px-3 sm:px-4 py-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white flex items-center gap-1 text-xs font-medium transition-all active:scale-95" title="Önceki Olumlama (Sol Ok)">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="hidden sm:inline">Önceki</span>
-        </button>
-
-        <span class="w-px h-5 bg-white/10"></span>
-
-        <!-- Favorilere Ekle / Kalp (Öne Çıkarılmış Buton) -->
-        <button id="btn-favorite" class="w-11 h-11 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 flex items-center justify-center text-slate-300 hover:text-rose-400 transition-all hover:scale-110 active:scale-95 shadow-sm" title="Kalbime Dokundu (Favori - F Tuşu)">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-        </button>
-
-        <!-- Rastgele / Karıştır -->
-        <button id="btn-shuffle" class="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-sky-300 transition-all active:scale-95" title="Rastgele Olumlama">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-        </button>
-
-        <!-- Görsel Olarak İndir (Story / Wallpaper / PNG) -->
-        <button id="btn-download-card" class="px-3 py-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-sky-300 flex items-center gap-1.5 text-xs font-medium transition-all active:scale-95" title="Kartı Görsel Olarak İndir (PNG)">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          <span class="hidden sm:inline">Görsel İndir</span>
-        </button>
-
-        <!-- Metni Kopyala -->
-        <button id="btn-share" class="w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-emerald-300 transition-all active:scale-95" title="Metni Kopyala">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-        </button>
-
-        <span class="w-px h-5 bg-white/10"></span>
-
-        <!-- Sonraki Kart -->
-        <button id="btn-next" class="px-3 sm:px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center gap-1 text-xs font-semibold transition-all active:scale-95" title="Sonraki Olumlama (Sağ Ok veya Boşluk)">
-          <span>Sonraki</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </button>
-
-      </div>
-
-      <!-- Alt İpucu Metni -->
-      <div class="text-[11px] text-slate-500 font-medium tracking-wide flex items-center gap-2.5 hide-in-widget">
-        <span>💡 Kartı <b>sağa</b> kaydırarak favorine ekle, <b>sola</b> kaydırarak sonrakine geç</span>
-      </div>
-    </footer>
-  </div>
-
-  <!-- MODAL 1: YENİLENMİŞ HUZUR VERİCİ AMBİYANS & MÜZİK SEÇİCİ -->
-  <div id="mixer-modal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-panel w-full max-w-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative">
-      <!-- Kapatma Butonu -->
-      <button id="btn-close-mixer" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-11 h-11 rounded-2xl bg-sky-500/20 text-sky-300 flex items-center justify-center text-2xl">
-          🎵
+        <!-- Günün Meditasyonu Spotlight Kartı -->
+        <div class="relative overflow-hidden rounded-3xl p-6 bg-gradient-to-br from-indigo-950 via-slate-900 to-sky-950 border border-indigo-400/25 shadow-2xl">
+          <div class="relative z-10">
+            <span class="px-2.5 py-1 rounded-full bg-sky-400/20 text-sky-300 text-[11px] font-bold uppercase tracking-wider">
+              ⭐ Günün Seansı
+            </span>
+            <h2 class="text-xl font-bold text-white mt-3">Derin Uykuya Geçiş</h2>
+            <p class="text-xs text-slate-300 mt-1 max-w-md line-clamp-2">
+              Günün tüm zihinsel yükünü geride bırak. Yavaş ve dinlendirici nefeslerle huzurlu bir uykuya hazırlan.
+            </p>
+            <div class="flex items-center gap-4 mt-4">
+              <button onclick="startMeditationById('med_sleep')" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-sky-400 to-indigo-600 text-white font-semibold text-xs flex items-center gap-2 shadow-lg shadow-sky-500/20 hover:scale-105 active:scale-95 transition-all">
+                <span>▶</span>
+                <span>Seansı Başlat (10 Dk)</span>
+              </button>
+              <span class="text-xs text-slate-400 flex items-center gap-1">
+                <span>🌙</span> Gece Ormanı Sesleriyle
+              </span>
+            </div>
+          </div>
+          <div class="absolute -right-6 -bottom-6 text-8xl opacity-15 pointer-events-none">🌙</div>
         </div>
-        <div>
-          <h2 class="text-lg font-bold text-white">Huzur Verici Ortam Sesleri</h2>
-          <p class="text-xs text-slate-400">Tek tıkla hazır bir ambiyans seçin veya kendi özel miksinizi yaratın.</p>
+
+        <!-- Kategori Filtresi -->
+        <div class="flex items-center justify-between pt-2">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Tüm Seanslar</h3>
+          <span class="text-xs text-slate-400" id="meditation-count-label">7 Rehberli Seans</span>
         </div>
-      </div>
 
-      <!-- Hazır Huzur Şablonları (Büyük Tıklanabilir Kartlar) -->
-      <div class="mb-6">
-        <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5 block">Hazır Ambiyanslar</label>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-          
-          <button data-preset="kamp" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-amber-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🏕️</div>
-            <div class="text-xs font-bold text-white group-hover:text-amber-300">Gece Kampı</div>
-            <div class="text-[10px] text-slate-400">Çıtırdayan ateş & esinti</div>
-          </button>
-
-          <button data-preset="gece" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-sky-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🦗</div>
-            <div class="text-xs font-bold text-white group-hover:text-sky-300">Gece Ormanı</div>
-            <div class="text-[10px] text-slate-400">Cırcır böcekleri & piyano</div>
-          </button>
-
-          <button data-preset="yagmur" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-cyan-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🌧️</div>
-            <div class="text-xs font-bold text-white group-hover:text-cyan-300">Yağmurlu Pencere</div>
-            <div class="text-[10px] text-slate-400">Akan dere & su damlaları</div>
-          </button>
-
-          <button data-preset="piyano" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-indigo-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🎹</div>
-            <div class="text-xs font-bold text-white group-hover:text-indigo-300">Huzur Piyanosu</div>
-            <div class="text-[10px] text-slate-400">432Hz meditatif akorlar</div>
-          </button>
-
-          <button data-preset="okyanus" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-teal-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🌊</div>
-            <div class="text-xs font-bold text-white group-hover:text-teal-300">Sakin Okyanus</div>
-            <div class="text-[10px] text-slate-400">Gel-git dalgaları</div>
-          </button>
-
-          <button data-preset="zen" class="preset-btn p-3 rounded-2xl glass-button text-left border-white/10 hover:border-rose-400/50 flex flex-col justify-between group transition-all">
-            <div class="text-2xl mb-1.5">🔔</div>
-            <div class="text-xs font-bold text-white group-hover:text-rose-300">Zen Tapınağı</div>
-            <div class="text-[10px] text-slate-400">Tibet çanağı & derinlik</div>
-          </button>
-
+        <!-- Meditasyon Kartları Listesi -->
+        <div id="meditations-grid" class="space-y-3">
+          <!-- meditations-data.js üzerinden doldurulur -->
         </div>
-      </div>
+      </section>
 
-      <!-- Bağımsız Ses Ayarları Çekmecesi -->
-      <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2 block">Özel Ses Dengeleyici</label>
-      <div class="space-y-2.5 max-h-[200px] overflow-y-auto pr-1">
+      <!-- ==================== TAB 2: İNTERAKTİF NEFES KOÇU ==================== -->
+      <section id="tab-breath" class="tab-pane hidden space-y-4">
         
-        <!-- 1. Kamp Ateşi -->
-        <div id="card-ch-campfire" class="glass-card rounded-xl p-2.5 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <span class="text-lg">🏕️</span>
-            <div class="text-xs font-semibold text-white">Kamp Ateşi</div>
+        <!-- Nefes Tekniği Seçici Butonları -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button data-tech="breath_478" class="breath-tech-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/40 whitespace-nowrap">
+            🌙 4-7-8 Uyku
+          </button>
+          <button data-tech="breath_box" class="breath-tech-btn px-3.5 py-2 rounded-xl text-xs font-semibold glass-button whitespace-nowrap">
+            📦 Kutu Nefesi (4-4-4-4)
+          </button>
+          <button data-tech="breath_equal" class="breath-tech-btn px-3.5 py-2 rounded-xl text-xs font-semibold glass-button whitespace-nowrap">
+            ⚖️ 4-4 Denge
+          </button>
+          <button data-tech="breath_711" class="breath-tech-btn px-3.5 py-2 rounded-xl text-xs font-semibold glass-button whitespace-nowrap">
+            🍃 7-11 Sakinleşme
+          </button>
+          <button data-tech="breath_energy" class="breath-tech-btn px-3.5 py-2 rounded-xl text-xs font-semibold glass-button whitespace-nowrap">
+            ⚡ Canlandırıcı
+          </button>
+        </div>
+
+        <!-- Aktif Teknik Açıklaması -->
+        <div id="breath-tech-info" class="glass-card rounded-2xl p-4 text-center">
+          <h4 id="breath-tech-title" class="text-sm font-bold text-white">4-7-8 Uyku & Rahatlama</h4>
+          <p id="breath-tech-desc" class="text-xs text-slate-400 mt-0.5">Sinir sistemini yatıştıran doğal sakinleştirici.</p>
+        </div>
+
+        <!-- Dev İnteraktif Nefes Küresi Sahnesi -->
+        <div class="relative h-[340px] flex flex-col items-center justify-center my-4">
+          <!-- Büyüyüp Küçülen Dış Enerji Halesi -->
+          <div id="breath-halo" class="absolute w-56 h-56 rounded-full bg-sky-500/10 blur-2xl transition-all duration-1000"></div>
+
+          <!-- Ana Nefes Küresi -->
+          <div id="breath-bubble" class="w-48 h-48 rounded-full bg-gradient-to-tr from-sky-500/20 via-indigo-500/30 to-purple-500/20 border-2 border-sky-400/50 flex flex-col items-center justify-center shadow-2xl relative transition-transform ease-in-out duration-1000">
+            <span id="breath-action-text" class="text-lg font-bold text-white tracking-wide">Hazır</span>
+            <span id="breath-seconds-text" class="text-4xl font-mono font-light text-sky-300 mt-1">--</span>
+            <span id="breath-sub-cue" class="text-[10px] text-slate-300 mt-1 px-2 text-center">Başlat'a dokunun</span>
           </div>
-          <input id="vol-campfire" type="range" min="0" max="1" step="0.05" value="0.6" class="flex-1 accent-amber-400 cursor-pointer">
-          <button id="toggle-campfire" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white/10 text-slate-400">Kapalı</button>
-        </div>
 
-        <!-- 2. Cırcır Böcekleri -->
-        <div id="card-ch-crickets" class="glass-card rounded-xl p-2.5 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <span class="text-lg">🦗</span>
-            <div class="text-xs font-semibold text-white">Cırcır Böcekleri</div>
-          </div>
-          <input id="vol-crickets" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-sky-400 cursor-pointer">
-          <button id="toggle-crickets" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white/10 text-slate-400">Kapalı</button>
-        </div>
-
-        <!-- 3. Akan Su & Yağmur -->
-        <div id="card-ch-water" class="glass-card rounded-xl p-2.5 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <span class="text-lg">💧</span>
-            <div class="text-xs font-semibold text-white">Akan Su & Yağmur</div>
-          </div>
-          <input id="vol-water" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-cyan-400 cursor-pointer">
-          <button id="toggle-water" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white/10 text-slate-400">Kapalı</button>
-        </div>
-
-        <!-- 4. Huzur Piyanosu (432Hz) -->
-        <div id="card-ch-piano" class="glass-card rounded-xl p-2.5 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <span class="text-lg">🎹</span>
-            <div class="text-xs font-semibold text-white">432Hz Piyano</div>
-          </div>
-          <input id="vol-piano" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-indigo-400 cursor-pointer">
-          <button id="toggle-piano" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white/10 text-slate-400">Kapalı</button>
-        </div>
-
-      </div>
-
-      <!-- Alt Master Kontrol -->
-      <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-        <button id="btn-sound-mute-all" class="px-3 py-1.5 rounded-full text-xs font-medium text-rose-300 hover:bg-rose-500/15 transition-all">
-          Hepsini Sustur
-        </button>
-        <div class="flex items-center gap-2">
-          <span class="text-xs text-slate-400 font-medium">Ana Ses:</span>
-          <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.7" class="w-32 accent-sky-400 cursor-pointer">
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- MODAL 2: TELEFON / ANA EKRAN WİDGET SİMÜLATÖRÜ & KURULUMU -->
-  <div id="widget-guide-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-panel w-full max-w-lg rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative flex flex-col items-center">
-      <button id="btn-close-widget-guide" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-
-      <div class="w-11 h-11 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-2xl mb-2">
-        📱
-      </div>
-      <h3 class="text-lg font-bold text-white mb-1">Ana Ekran Widget'ı</h3>
-      <p class="text-xs text-slate-400 text-center mb-5 max-w-sm">
-        Olumlamaları tıpkı telefonunun veya masaüstünün ana ekranındaki bir widget gibi her an önünde görebilirsin.
-      </p>
-
-      <!-- Telefon Ana Ekran Görünüm Simülatörü -->
-      <div class="w-full max-w-xs bg-slate-950 rounded-3xl p-4 border border-white/15 shadow-2xl relative overflow-hidden mb-5">
-        <!-- Telefon Üst Saat ve Durum Barı -->
-        <div class="flex items-center justify-between text-[11px] font-semibold text-white/70 px-2 pb-3">
-          <span>09:41</span>
-          <div class="flex items-center gap-1">
-            <span>5G</span>
-            <span>100%</span>
+          <!-- Döngü ve Süre Sayaçları -->
+          <div class="mt-6 flex items-center gap-6 text-xs text-slate-400">
+            <div>Döngü: <span id="breath-cycle-count" class="font-bold text-white">0</span></div>
+            <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+            <div>Toplam: <span id="breath-total-time" class="font-bold text-white">00:00</span></div>
           </div>
         </div>
 
-        <!-- Ana Ekrandaki Olumlama Widget'ı (iOS/Android 4x2 Widget Stili) -->
-        <div class="rounded-2xl p-3.5 bg-gradient-to-br from-cyan-950 via-teal-900 to-blue-950 border border-white/20 shadow-lg relative overflow-hidden mb-4">
-          <div class="flex items-center justify-between text-[10px] text-sky-300 mb-1">
-            <span class="flex items-center gap-1">✨ Günün Olumlaması</span>
-            <span class="text-white/40">Huzur</span>
+        <!-- Nefes Kontrolleri -->
+        <div class="flex items-center justify-center gap-3">
+          <button id="btn-breath-start" class="px-8 py-3 rounded-full bg-gradient-to-r from-sky-400 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-sky-500/25 hover:opacity-95 active:scale-95 transition-all">
+            Egzersizi Başlat
+          </button>
+          <button id="btn-breath-reset" class="px-5 py-3 rounded-full glass-button text-xs text-slate-300 hover:text-white">
+            Sıfırla
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ==================== TAB 3: GÜNLÜK OLUMLAMALAR ==================== -->
+      <section id="tab-affirmations" class="tab-pane hidden space-y-3">
+        <!-- Kategori Filtreleri -->
+        <div class="overflow-x-auto no-scrollbar py-1">
+          <div id="category-filters" class="flex items-center gap-2 min-w-max pb-1">
+            <!-- JavaScript dinamik ekler -->
           </div>
-          <p class="text-xs font-serif text-white font-medium line-clamp-3 leading-snug">
-            “Zihnim sakin, kalbim dingin. Şu anda güvendeyim ve her şey olması gerektiği gibi akıyor.”
-          </p>
-          <div class="text-[9px] text-white/50 italic mt-1.5">Derin bir nefes al ve bırak.</div>
         </div>
 
-        <!-- Örnek Telefon İkonları -->
-        <div class="grid grid-cols-4 gap-2 text-center pt-1">
-          <div><div class="w-10 h-10 mx-auto rounded-xl bg-emerald-500 flex items-center justify-center text-sm shadow">📞</div><span class="text-[9px] text-white/60 mt-1 block">Telefon</span></div>
-          <div><div class="w-10 h-10 mx-auto rounded-xl bg-sky-500 flex items-center justify-center text-sm shadow">💬</div><span class="text-[9px] text-white/60 mt-1 block">Mesaj</span></div>
-          <div><div class="w-10 h-10 mx-auto rounded-xl bg-indigo-500 flex items-center justify-center text-sm shadow">📷</div><span class="text-[9px] text-white/60 mt-1 block">Kamera</span></div>
-          <div><div class="w-10 h-10 mx-auto rounded-xl bg-amber-500 flex items-center justify-center text-sm shadow">⚙️</div><span class="text-[9px] text-white/60 mt-1 block">Ayarlar</span></div>
+        <!-- 3D Kart Sahnesi -->
+        <div class="flex flex-col items-center justify-center my-2 relative card-perspective w-full max-w-md mx-auto">
+          <div id="card-stack" class="relative w-full h-[410px]">
+            <!-- Aktif kart buraya yerleştirilir -->
+          </div>
         </div>
-      </div>
 
-      <!-- Kurulum Adımları -->
-      <div class="w-full text-xs text-slate-300 bg-white/5 rounded-2xl p-4 border border-white/10 space-y-2 mb-4">
-        <div class="font-semibold text-white flex items-center gap-1.5">
-          <span>📲</span> Telefonuna veya Masaüstüne Nasıl Eklenir?
+        <!-- Kontrol Dock'u -->
+        <div class="glass-panel px-4 py-2 rounded-full flex items-center justify-center gap-2 sm:gap-4 shadow-xl border border-white/10 max-w-sm mx-auto">
+          <button id="btn-prev" class="px-3 py-1.5 rounded-full hover:bg-white/10 text-slate-300 text-xs font-medium">
+            Önceki
+          </button>
+          <span class="w-px h-4 bg-white/10"></span>
+          <button id="btn-favorite" class="w-9 h-9 rounded-full bg-white/5 hover:bg-rose-500/20 text-slate-300 hover:text-rose-400 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </button>
+          <button id="btn-shuffle" class="w-9 h-9 rounded-full hover:bg-white/10 text-slate-300 hover:text-sky-300 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </button>
+          <button id="btn-download-card" class="px-2.5 py-1.5 rounded-full hover:bg-white/10 text-slate-300 text-xs flex items-center gap-1">
+            <span>📷</span> Görsel
+          </button>
+          <span class="w-px h-4 bg-white/10"></span>
+          <button id="btn-next" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold">
+            Sonraki
+          </button>
         </div>
-        <p class="text-[11px] text-slate-400">
-          • <b>iPhone / iPad (Safari):</b> Alt menüdeki <b>Paylaş</b> butonuna basıp <b>"Ana Ekrana Ekle"</b> seçeneğine dokunun.<br>
-          • <b>Android (Chrome):</b> Sağ üstteki üç noktaya dokunup <b>"Uygulamayı Yükle / Ana Ekrana Ekle"</b> seçin.<br>
-          • <b>Masaüstü (Chrome / Edge):</b> Adres çubuğundaki yükle simgesine tıklayıp ayrı bir pencere olarak kullanın.
-        </p>
-      </div>
+      </section>
 
-      <div class="flex items-center gap-2 w-full">
-        <a href="widget.html" target="_blank" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-xs text-center hover:opacity-95 transition-all">
-          Müstakil Mini Widget Sayfasını Aç ↗
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: MEDİTASYON ZAMANLAYICISI -->
-  <div id="timer-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-lg flex items-center justify-center p-4 hidden">
-    <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative flex flex-col items-center text-center">
-      <button id="btn-close-timer" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-
-      <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-2xl mb-2">
-        ⏱️
-      </div>
-      <h3 class="text-xl font-bold text-white mb-1">Dinginlik Zamanlayıcısı</h3>
-      <p class="text-xs text-slate-400 mb-6">Meditasyon sürenizi seçin. Süre bitiminde kutsal çan sesi duyulacaktır.</p>
-
-      <div id="timer-presets" class="grid grid-cols-4 gap-2 w-full mb-6">
-        <button data-duration="180" class="timer-duration-btn py-2.5 rounded-xl text-xs font-semibold glass-button border-white/10 hover:border-amber-400/50">3 Dk</button>
-        <button data-duration="300" class="timer-duration-btn py-2.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/40">5 Dk</button>
-        <button data-duration="600" class="timer-duration-btn py-2.5 rounded-xl text-xs font-semibold glass-button border-white/10 hover:border-amber-400/50">10 Dk</button>
-        <button data-duration="900" class="timer-duration-btn py-2.5 rounded-xl text-xs font-semibold glass-button border-white/10 hover:border-amber-400/50">15 Dk</button>
-      </div>
-
-      <div class="relative w-44 h-44 flex items-center justify-center mb-6">
-        <svg class="w-full h-full transform -rotate-90">
-          <circle cx="88" cy="88" r="76" stroke="currentColor" stroke-width="6" class="text-slate-800" fill="transparent"/>
-          <circle id="timer-progress" cx="88" cy="88" r="76" stroke="currentColor" stroke-width="6" class="text-amber-400 transition-all duration-1000" fill="transparent" stroke-dasharray="477" stroke-dashoffset="0" stroke-linecap="round"/>
-        </svg>
-        <div class="absolute inset-0 flex flex-col items-center justify-center">
-          <span id="timer-display" class="text-3xl font-mono font-light text-white">05:00</span>
-          <span id="timer-status-text" class="text-[10px] text-amber-300/80 tracking-wider uppercase mt-1">Hazır</span>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-3 w-full">
-        <button id="btn-timer-start" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm hover:opacity-95 shadow-lg shadow-amber-500/25 transition-all">
-          Seansı Başlat
-        </button>
-        <button id="btn-timer-reset" class="px-4 py-3 rounded-xl glass-button text-xs text-slate-300 hover:text-white">
-          Sıfırla
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 4: KENDİ OLUMLAMANI EKLE -->
-  <div id="custom-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl relative">
-      <button id="btn-close-custom" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-
-      <div class="flex items-center gap-3 mb-5">
-        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl">
-          ✍️
-        </div>
+      <!-- ==================== TAB 4: AMBİYANS & SESLER ==================== -->
+      <section id="tab-sounds" class="tab-pane hidden space-y-4">
+        <!-- Hazır Önayarlar -->
         <div>
-          <h2 class="text-lg font-bold text-white">Kendi Olumlamanı Ekle</h2>
-          <p class="text-xs text-slate-400">Kişisel niyetini destene kat.</p>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Hazır Ambiyanslar</h3>
+          <div class="grid grid-cols-3 gap-2">
+            <button data-preset="kamp" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-amber-400/50">
+              <div class="text-2xl mb-1">🏕️</div>
+              <div class="text-xs font-bold text-white">Gece Kampı</div>
+              <div class="text-[10px] text-slate-400">Ateş & esinti</div>
+            </button>
+            <button data-preset="gece" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-sky-400/50">
+              <div class="text-2xl mb-1">🦗</div>
+              <div class="text-xs font-bold text-white">Gece Ormanı</div>
+              <div class="text-[10px] text-slate-400">Cırcır & piyano</div>
+            </button>
+            <button data-preset="yagmur" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-cyan-400/50">
+              <div class="text-2xl mb-1">🌧️</div>
+              <div class="text-xs font-bold text-white">Yağmur</div>
+              <div class="text-[10px] text-slate-400">Su damlaları</div>
+            </button>
+            <button data-preset="piyano" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-indigo-400/50">
+              <div class="text-2xl mb-1">🎹</div>
+              <div class="text-xs font-bold text-white">432Hz Piyano</div>
+              <div class="text-[10px] text-slate-400">Meditatif akor</div>
+            </button>
+            <button data-preset="okyanus" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-teal-400/50">
+              <div class="text-2xl mb-1">🌊</div>
+              <div class="text-xs font-bold text-white">Okyanus</div>
+              <div class="text-[10px] text-slate-400">Sakin dalgalar</div>
+            </button>
+            <button data-preset="zen" class="preset-btn p-3 rounded-2xl glass-card text-left hover:border-rose-400/50">
+              <div class="text-2xl mb-1">🔔</div>
+              <div class="text-xs font-bold text-white">Tibet Çanağı</div>
+              <div class="text-[10px] text-slate-400">Şifalı çanlar</div>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <form id="form-custom-affirmation" class="space-y-4">
-        <div>
-          <label class="text-xs font-semibold text-slate-300 block mb-1">Olumlama Cümlesi *</label>
-          <textarea id="custom-text" required rows="3" class="w-full bg-slate-900/80 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-sky-400" placeholder="Örn: Hayatımdaki tüm güzellikleri sevgiyle kabul ediyorum..."></textarea>
+        <!-- Bireysel Ses Dengeleyici -->
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Özel Ses Mikseri</h3>
+        <div class="space-y-2">
+          <!-- Kamp Ateşi -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🏕️</span>
+            <span class="text-xs font-semibold text-white w-24">Kamp Ateşi</span>
+            <input id="vol-campfire" type="range" min="0" max="1" step="0.05" value="0.6" class="flex-1 accent-amber-400 cursor-pointer">
+            <button id="toggle-campfire" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
+          <!-- Cırcır Böcekleri -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🦗</span>
+            <span class="text-xs font-semibold text-white w-24">Cırcır Böceği</span>
+            <input id="vol-crickets" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-sky-400 cursor-pointer">
+            <button id="toggle-crickets" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
+          <!-- Su & Yağmur -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🌧️</span>
+            <span class="text-xs font-semibold text-white w-24">Akan Su</span>
+            <input id="vol-water" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-cyan-400 cursor-pointer">
+            <button id="toggle-water" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
+          <!-- 432Hz Piyano -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🎹</span>
+            <span class="text-xs font-semibold text-white w-24">432Hz Piyano</span>
+            <input id="vol-piano" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-indigo-400 cursor-pointer">
+            <button id="toggle-piano" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
+          <!-- Okyanus Dalgaları -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🌊</span>
+            <span class="text-xs font-semibold text-white w-24">Okyanus</span>
+            <input id="vol-ocean" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-teal-400 cursor-pointer">
+            <button id="toggle-ocean" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
+          <!-- Tibet Çanağı -->
+          <div class="glass-card rounded-2xl p-3 flex items-center justify-between gap-3">
+            <span class="text-xl">🔔</span>
+            <span class="text-xs font-semibold text-white w-24">Tibet Çanağı</span>
+            <input id="vol-bowl" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-1 accent-rose-400 cursor-pointer">
+            <button id="toggle-bowl" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-400">Kapalı</button>
+          </div>
         </div>
 
-        <div>
-          <label class="text-xs font-semibold text-slate-300 block mb-1">Alt Tefekkür / Hatırlatma Notu</label>
-          <input id="custom-subtext" type="text" class="w-full bg-slate-900/80 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-sky-400" placeholder="Örn: Kalbini ferah tut ve güven.">
-        </div>
-
-        <div>
-          <label class="text-xs font-semibold text-slate-300 block mb-1">Kategori</label>
-          <select id="custom-category" class="w-full bg-slate-900/80 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-sky-400">
-            <option value="huzur">İç Huzur & Dinginlik</option>
-            <option value="ozsevgi">Öz Sevgi & Değerlilik</option>
-            <option value="basari">Bolluk & Başarı</option>
-            <option value="sukran">Şükran & Farkındalık</option>
-            <option value="saglik">Sağlık & Canlılık</option>
-            <option value="cesaret">Cesaret & Özgürleşme</option>
+        <!-- Uyku Zamanlayıcısı & Gong Butonu -->
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span>⏱️</span>
+            <div>
+              <div class="text-xs font-bold text-white">Uyku Zamanlayıcısı</div>
+              <div class="text-[10px] text-slate-400">Süresi dolunca yavaşça kısılır</div>
+            </div>
+          </div>
+          <select id="sleep-timer-select" class="bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white">
+            <option value="0">Kapalı</option>
+            <option value="5">5 Dakika</option>
+            <option value="15">15 Dakika</option>
+            <option value="30">30 Dakika</option>
+            <option value="45">45 Dakika</option>
+            <option value="60">60 Dakika</option>
           </select>
         </div>
+      </section>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-sm hover:opacity-95 shadow-lg shadow-sky-500/25 transition-all">
-          Desteme Ekle
-        </button>
-      </form>
+      <!-- ==================== TAB 5: PROFİL, RUH HALİ & GÜNLÜK ==================== -->
+      <section id="tab-profile" class="tab-pane hidden space-y-4">
+        
+        <!-- Günün Ruh Hali Check-in -->
+        <div class="glass-card rounded-3xl p-5">
+          <h3 class="text-sm font-bold text-white mb-1">Bugün Nasıl Hissediyorsun?</h3>
+          <p class="text-xs text-slate-400 mb-3">Duygunu fark et ve kabul et.</p>
+          <div class="grid grid-cols-5 gap-2 text-center" id="mood-selector">
+            <button data-mood="huzurlu" class="mood-btn p-2.5 rounded-2xl glass-button flex flex-col items-center">
+              <span class="text-2xl">🧘</span>
+              <span class="text-[10px] text-slate-300 mt-1 font-medium">Huzurlu</span>
+            </button>
+            <button data-mood="enerjik" class="mood-btn p-2.5 rounded-2xl glass-button flex flex-col items-center">
+              <span class="text-2xl">⚡</span>
+              <span class="text-[10px] text-slate-300 mt-1 font-medium">Enerjik</span>
+            </button>
+            <button data-mood="kaygili" class="mood-btn p-2.5 rounded-2xl glass-button flex flex-col items-center">
+              <span class="text-2xl">🌧️</span>
+              <span class="text-[10px] text-slate-300 mt-1 font-medium">Kaygılı</span>
+            </button>
+            <button data-mood="minnettar" class="mood-btn p-2.5 rounded-2xl glass-button flex flex-col items-center">
+              <span class="text-2xl">💖</span>
+              <span class="text-[10px] text-slate-300 mt-1 font-medium">Minnettar</span>
+            </button>
+            <button data-mood="yorgun" class="mood-btn p-2.5 rounded-2xl glass-button flex flex-col items-center">
+              <span class="text-2xl">🌙</span>
+              <span class="text-[10px] text-slate-300 mt-1 font-medium">Yorgun</span>
+            </button>
+          </div>
+          <!-- Ruh Hali Tavsiye Kartı -->
+          <div id="mood-advice" class="mt-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-sky-200 hidden">
+            <!-- Dinamik öneri buraya yazılır -->
+          </div>
+        </div>
+
+        <!-- 3 Maddelik Şükran Günlüğü -->
+        <div class="glass-card rounded-3xl p-5">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+              <span>📖</span> Şükran Günlüğü
+            </h3>
+            <span class="text-[11px] text-slate-400">Günün 3 Güzelliği</span>
+          </div>
+          <div class="space-y-2 mb-3">
+            <input id="gratitude-1" type="text" placeholder="1. Minnettar olduğum bir an..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400">
+            <input id="gratitude-2" type="text" placeholder="2. Bana iyi gelen bir insan veya durum..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400">
+            <input id="gratitude-3" type="text" placeholder="3. Kendimde takdir ettiğim bir yönüm..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400">
+          </div>
+          <button id="btn-save-gratitude" class="w-full py-2.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 font-semibold text-xs border border-sky-400/30 transition-all">
+            Günün Şükranını Kaydet ✨
+          </button>
+        </div>
+
+        <!-- Meditasyon İstatistikleri -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="glass-card rounded-2xl p-3.5 text-center">
+            <div id="stat-total-mins" class="text-2xl font-bold text-white">0</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Toplam Dk</div>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 text-center">
+            <div id="stat-total-sessions" class="text-2xl font-bold text-sky-300">0</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Seans Sayısı</div>
+          </div>
+          <div class="glass-card rounded-2xl p-3.5 text-center">
+            <div id="stat-streak" class="text-2xl font-bold text-amber-300">1</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Günlük Seri</div>
+          </div>
+        </div>
+
+        <!-- Günün Zen Bilgelik Sözü -->
+        <div class="glass-card rounded-3xl p-5 border-l-4 border-l-amber-400">
+          <div class="text-xs font-bold uppercase tracking-wider text-amber-300 mb-2">Günün Tefekkürü</div>
+          <blockquote id="zen-quote-text" class="text-xs font-serif text-slate-200 italic leading-relaxed">
+            "Kusur arayan göz, güzelliği göremez. Sen kalbini temiz tut, çiçekler zaten açar."
+          </blockquote>
+          <div id="zen-quote-author" class="text-[11px] text-slate-400 font-semibold text-right mt-2">
+            — Mevlana Celaleddin-i Rumi
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- ==================== MODERN ALT TAB DOCK (YÜZEN CAM PANEL) ==================== -->
+    <nav class="fixed bottom-3 inset-x-4 max-w-md mx-auto z-40 glass-panel px-3 py-2 rounded-3xl flex items-center justify-around shadow-2xl border border-white/10 backdrop-blur-2xl">
+      <button data-tab="tab-meditation" class="tab-btn active flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-all">
+        <span class="text-lg">🧘</span>
+        <span class="text-[10px] font-semibold">Meditasyon</span>
+      </button>
+
+      <button data-tab="tab-breath" class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-all">
+        <span class="text-lg">🌬️</span>
+        <span class="text-[10px] font-semibold">Nefes</span>
+      </button>
+
+      <button data-tab="tab-affirmations" class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-all">
+        <span class="text-lg">✨</span>
+        <span class="text-[10px] font-semibold">Olumlama</span>
+      </button>
+
+      <button data-tab="tab-sounds" class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-all">
+        <span class="text-lg">🎶</span>
+        <span class="text-[10px] font-semibold">Ambiyans</span>
+      </button>
+
+      <button data-tab="tab-profile" class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-all">
+        <span class="text-lg">📊</span>
+        <span class="text-[10px] font-semibold">Profil</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ==================== TAM EKRAN MEDİTASYON OYNATICI MODAL ==================== -->
+  <div id="meditation-player-modal" class="fixed inset-0 z-50 bg-[#060913]/95 backdrop-blur-2xl flex flex-col justify-between p-6 hidden">
+    <!-- Üst Bar: Kapatma & Başlık -->
+    <div class="flex items-center justify-between">
+      <button id="btn-close-player" class="p-2 rounded-full glass-button text-slate-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="text-center">
+        <span id="player-category" class="text-[11px] font-bold uppercase tracking-wider text-sky-400">Rehberli Seans</span>
+        <h3 id="player-title" class="text-base font-bold text-white">Derin Uykuya Geçiş</h3>
+      </div>
+      <button id="btn-player-bell" class="p-2 rounded-full glass-button text-amber-300" title="Tibet Çanı Çal">
+        🔔
+      </button>
+    </div>
+
+    <!-- Orta: Görsel İlerleme & Adım Adım Rehberlik Metni -->
+    <div class="flex-1 flex flex-col items-center justify-center my-6 text-center max-w-lg mx-auto">
+      <!-- Zamanlayıcı Dairesi -->
+      <div class="relative w-52 h-52 flex items-center justify-center mb-8">
+        <svg class="w-full h-full transform -rotate-90">
+          <circle cx="104" cy="104" r="92" stroke="currentColor" stroke-width="6" class="text-slate-800" fill="transparent"/>
+          <circle id="player-circle-progress" cx="104" cy="104" r="92" stroke="currentColor" stroke-width="6" class="text-sky-400 transition-all duration-1000" fill="transparent" stroke-dasharray="578" stroke-dashoffset="0" stroke-linecap="round"/>
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span id="player-time-display" class="text-4xl font-mono font-light text-white">10:00</span>
+          <span id="player-cue-display" class="text-xs text-sky-300 font-semibold mt-2 px-3">Gözlerini kapat ve gevşe</span>
+        </div>
+      </div>
+
+      <!-- Spoken Guide Box -->
+      <div class="glass-card rounded-2xl p-5 min-h-[120px] flex items-center justify-center">
+        <p id="player-guide-text" class="text-base font-serif text-slate-100 leading-relaxed italic animate-fade-in">
+          Yatağına rahatça uzan. Başını yastığına hafifçe bırak ve gözlerini usulca kapat.
+        </p>
+      </div>
+    </div>
+
+    <!-- Alt: Kontrol Düğmeleri -->
+    <div class="flex items-center justify-center gap-6 pb-4">
+      <button id="btn-player-prev-step" class="p-3 rounded-full glass-button text-slate-400 hover:text-white" title="Önceki Adım">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+
+      <button id="btn-player-play-pause" class="w-16 h-16 rounded-full bg-gradient-to-r from-sky-400 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-sky-500/25 active:scale-95 transition-all">
+        ⏸
+      </button>
+
+      <button id="btn-player-next-step" class="p-3 rounded-full glass-button text-slate-400 hover:text-white" title="Sonraki Adım">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
     </div>
   </div>
 
@@ -441,6 +488,7 @@
 
   <!-- Scriptler -->
   <script src="affirmations-data.js"></script>
+  <script src="meditations-data.js"></script>
   <script src="audio-engine.js"></script>
   <script src="app.js"></script>
 </body>

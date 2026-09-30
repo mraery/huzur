@@ -167,3 +167,61 @@ body.widget-mode .widget-only {
 .sound-wave-bar {
   transition: height 0.08s ease;
 }
+
+/* Sekmeler ve Navigasyon */
+.tab-pane.hidden {
+  display: none !important;
+}
+
+.tab-pane.active {
+  display: block !important;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tab-btn {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  color: #38bdf8 !important;
+}
+
+.tab-btn.active span:first-child {
+  transform: translateY(-2px) scale(1.2);
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Nefes Küresi Büyüme / Küçülme */
+.breath-inhale {
+  transform: scale(1.4) !important;
+  box-shadow: 0 0 60px rgba(56, 189, 248, 0.7) !important;
+  border-color: #38bdf8 !important;
+}
+
+.breath-hold {
+  transform: scale(1.4) !important;
+  box-shadow: 0 0 50px rgba(129, 140, 248, 0.6) !important;
+  border-color: #818cf8 !important;
+}
+
+.breath-exhale {
+  transform: scale(0.9) !important;
+  box-shadow: 0 0 25px rgba(52, 211, 153, 0.4) !important;
+  border-color: #34d399 !important;
+}
+
+.breath-rest {
+  transform: scale(1.0) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
